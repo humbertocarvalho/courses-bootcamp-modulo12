@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import { Container } from './styles';
 
@@ -9,6 +9,19 @@ export default function TechList() {
     setTechs([...techs, tech]);
     setTech('');
   }
+
+  useEffect(() => {
+    const techsStorage = localStorage.getItem('techs');
+
+    if (techsStorage) {
+      setTechs(JSON.parse(techsStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('techs', JSON.stringify(techs));
+  }, [techs]);
+
   return (
     <form data-testid='tech-form' onSubmit={handleAddTech}>
       <ul data-testid='tech-list'>
